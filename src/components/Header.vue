@@ -24,14 +24,11 @@
                 <!-- 用户名下拉菜单 -->
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
-                        {{username}}
+                          {{username}}
                         <i class="el-icon-caret-bottom"></i>
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <!-- <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">
-                                <el-dropdown-item>项目仓库</el-dropdown-item>
-                            </a> -->
                             <el-dropdown-item command="user">个人中心</el-dropdown-item>
                             <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
                         </el-dropdown-menu>

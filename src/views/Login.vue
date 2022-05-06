@@ -21,7 +21,7 @@
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm()">登录</el-button>
                 </div>
-                <p class="login-tips">Tips : 用户名和密码随便填。</p>
+                <p class="login-tips">Tips : 无注册需求。</p>
             </el-form>
         </div>
     </div>
@@ -32,13 +32,15 @@ import { ref, reactive } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
+import {onMounted} from "vue"
+import { Login } from "../api/index";
 
 export default {
     setup() {
         const router = useRouter();
         const param = reactive({
-            username: "admin",
-            password: "123123",
+            username: "gongjingzhe",
+            password: "123456",
         });
 
         const rules = {
@@ -57,11 +59,11 @@ export default {
         const submitForm = () => {
             login.value.validate((valid) => {
                 if (valid) {
-                    ElMessage.success("登录成功");
                     localStorage.setItem("ms_username", param.username);
-                    router.push("/");
+                    _Login();
+                  
                 } else {
-                    ElMessage.error("登录成功");
+                   
                     return false;
                 }
             });
@@ -70,12 +72,36 @@ export default {
         const store = useStore();
         store.commit("clearTags");
 
+        // const params = reactive({
+        //     username:"gongjingzhe",
+        //     password:""
+        // });
+        const _Login = () => {
+            Login(param).then((res) => {
+                console.log(res)
+
+                if(res.code == 200){
+                ElMessage.success("登录成功");
+                router.push("/");
+                }else{
+                ElMessage.warning("检查账号密码");
+                }
+             
+            })
+            .catch((res)=>{
+            ElMessage.error("登录失败");
+            });
+        };
+      
+
         return {
             param,
             rules,
             login,
             submitForm,
         };
+
+
     },
 };
 </script>
