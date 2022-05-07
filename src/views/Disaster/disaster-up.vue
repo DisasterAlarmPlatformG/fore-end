@@ -9,26 +9,26 @@
             </el-breadcrumb>
         </div>
       <div class="container">
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form :model="param" status-icon :rules="rules" ref="upform" label-width="100px" class="demo-ruleForm">
               <!-- 上传用户名 -->
               
               <el-form-item label="用户名" prop="username">
-                <el-input v-model="ruleForm.username" ></el-input>
+                <el-input v-model="param.username" placeholder="username" ></el-input>
                   </el-form-item>
               
               <el-form-item label="灾害码" prop="code">
-                <el-input  v-model="ruleForm.code" ></el-input>
+                <el-input  v-model="param.code" placeholder="code"></el-input>
                   </el-form-item>
 
               <el-form-item label="灾情描述" prop="desc">
-                <el-input type="textarea" v-model="ruleForm.desc" ></el-input>
+                <el-input type="textarea" v-model="param.desc" placeholder="desc"></el-input>
                   </el-form-item>
   
         
           <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+          <el-button type="primary" @click="submitForm()">提交</el-button>
             <!-- <el-button type="primary" @click="getdata">提交</el-button> -->
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button @click="resetForm()">重置</el-button>
         </el-form-item>
         </el-form> 
         
@@ -48,19 +48,21 @@
 
 
 <script>
+import { ref, reactive } from "vue";
+import {onMounted} from "vue"
+
  export default {
-    data() {
-    
-      return {
-        ruleForm: {
-          username: '',
-          code: '',
-          desc: ''
-        },
-        rules: {
-          username: [
+   setup(){ 
+
+        const param = reactive({
+            username: localStorage.getItem("ms_username"),
+            code: "",
+            desc: ""
+        });
+
+        const rules = {
+         username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
-            
           ],
           code: [
             { required: true, message: '请输入灾害码', trigger: 'blur' },
@@ -69,28 +71,82 @@
           desc: [
             { required: true, message: '请填输入灾情描述', trigger: 'blur' }
           ]
+        };
+        const upform = ref(null);
+        const submitForm = () => {
+           upform.value.validate((valid) => {
+                if (valid) {
+                  alert('submit!');
+                  console.log(param);
+                  
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+
+        };
+
+        const resetForm = () =>{
+          param.username = localStorage.getItem("ms_username");
+          param.code = '';
+          param.desc = '';
+          
         }
-      };
-    },
-    methods: {
-      getdata(){
-         console.log(this.ruleForm)
-      },
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-           
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
-    }
+      
+        return {
+            param,
+            rules,
+            upform,
+            submitForm,
+            resetForm,
+        };
+
+
+   }
+
+    // data() {
+    //   return {
+    //     ruleForm: {
+    //       username: '',
+    //       code: '',
+    //       desc: ''
+    //     },
+    //     rules: {
+    //       username: [
+    //         { required: true, message: '请输入用户名', trigger: 'blur' },
+            
+    //       ],
+    //       code: [
+    //         { required: true, message: '请输入灾害码', trigger: 'blur' },
+    //         { min: 36, max: 36, message: '长度为36位', trigger: 'blur' }
+    //       ],
+    //       desc: [
+    //         { required: true, message: '请填输入灾情描述', trigger: 'blur' }
+    //       ]
+    //     }
+    //   };
+    // },
+    // methods: {
+    //   getdata(){
+    //      console.log(this.ruleForm)
+    //   },
+    //   submitForm(formName) {
+    //     this.$refs[formName].validate((valid) => {
+    //       if (valid) {
+    //         alert('submit!');
+    //         console.log('success submit!!');
+    //         console.log(this.resetForm.username);
+    //       } else {
+    //         console.log('error submit!!');
+    //         return false;
+    //       }
+    //     });
+    //   },
+    //   resetForm(formName) {
+    //     this.$refs[formName].resetFields();
+    //   }
+    // }
   }
 </script>
 
