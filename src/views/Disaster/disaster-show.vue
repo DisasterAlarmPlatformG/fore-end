@@ -38,8 +38,8 @@
 
                 </el-table>
                 <div class="pagination">
-                    <el-pagination background layout="total, prev, pager, next" :current-page="query.pageIndex"
-                        :page-size="query.pageSize" :total="pageTotal" @current-change="handlePageChange">
+                    <el-pagination background layout="total, prev, pager, next" :current-page="query.page"
+                        :page-size="query.num" :total="pageTotal" @current-change="handlePageChange">
                     </el-pagination>
                 </div>
             </div>
@@ -51,7 +51,7 @@
 <script>
 import { ref, reactive } from "vue";
 // import { ElMessage, ElMessageBox } from "element-plus";
-import { ShowForm,SearchForm } from "../../api/index";
+import { ShowForm, SearchForm } from "../../api/index";
 
 export default {
     name: "donate",
@@ -80,9 +80,9 @@ export default {
         const query = reactive({
             username: localStorage.getItem("ms_username"),
             page: 1,
-            num: 10,
+            num: 5,
         });
-        // console.log(input1);
+
         const searchQuery = reactive({
             username: localStorage.getItem("ms_username"),
             item: "",
@@ -90,7 +90,7 @@ export default {
             num: 10,
         })
         const tableData = ref([]);
-        const pageTotal = ref(0);
+        const pageTotal = 10;
         // 获取表格数据
         const getData = () => {
             ShowForm(query).then((res) => {
@@ -107,17 +107,18 @@ export default {
             // console.log(searchQuery.item);
             // query.pageIndex = 1;
             // const tableData = ref([]);
-            SearchForm(searchQuery).then((res)=>{
-                tableData.value=res.data;
-                console.log(res.data);
+            SearchForm(searchQuery).then((res) => {
+                tableData.value = res.data;
+                // console.log(res.data);
             })
 
         };
         // 分页导航
-        // const handlePageChange = (val) => {
-        //     query.pageIndex = val;
-        //     getData();
-        // };
+        const handlePageChange = (val) => {
+            query.page = val;
+            // console.log();
+            getData();
+        };
 
 
         return {
@@ -128,7 +129,7 @@ export default {
             // form,
             searchQuery,
             handleSearch,
-            // handlePageChange,
+            handlePageChange,
             // handleDelete,
             // handleEdit,
             // saveEdit,
