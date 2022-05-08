@@ -20,8 +20,8 @@
                 <el-input  v-model="param.code" placeholder="code"></el-input>
                   </el-form-item>
 
-              <el-form-item label="灾情描述" prop="desc">
-                <el-input type="textarea" v-model="param.desc" placeholder="desc"></el-input>
+              <el-form-item label="灾情描述" prop="description">
+                <el-input type="textarea" v-model="param.description" placeholder="description"></el-input>
                   </el-form-item>
   
         
@@ -49,7 +49,9 @@
 
 <script>
 import { ref, reactive } from "vue";
-import {onMounted} from "vue"
+import {onMounted} from "vue";
+import {UpForm}  from "../../api/index";
+import { ElMessage } from "element-plus";
 
  export default {
    setup(){ 
@@ -57,7 +59,7 @@ import {onMounted} from "vue"
         const param = reactive({
             username: localStorage.getItem("ms_username"),
             code: "",
-            desc: ""
+            description: ""
         });
 
         const rules = {
@@ -68,7 +70,7 @@ import {onMounted} from "vue"
             { required: true, message: '请输入灾害码', trigger: 'blur' },
             { min: 36, max: 36, message: '长度为36位', trigger: 'blur' }
           ],
-          desc: [
+          description: [
             { required: true, message: '请填输入灾情描述', trigger: 'blur' }
           ]
         };
@@ -78,7 +80,7 @@ import {onMounted} from "vue"
                 if (valid) {
                   alert('submit!');
                   console.log(param);
-                  
+                  _UpForm();
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -90,10 +92,37 @@ import {onMounted} from "vue"
         const resetForm = () =>{
           param.username = localStorage.getItem("ms_username");
           param.code = '';
-          param.desc = '';
+          param.description = '';
           
-        }
+        };
+
+        //   const store = useStore();
+        // store.commit("clearTags");
+
+        // const params = reactive({
+        //     username:"gongjingzhe",
+        //     password:""
+        // });
+        const _UpForm = () => {
+            UpForm(param).then((res) => {
+                console.log(res)
+
+                if(res.code == 200){
+                ElMessage.success("新增成功");
+                
+                }else{
+                ElMessage.warning("请检查输入信息");
+                }
+             
+            })
+            .catch((res)=>{
+            ElMessage.error("登录失败");
+            });
+        };
       
+
+      
+
         return {
             param,
             rules,
