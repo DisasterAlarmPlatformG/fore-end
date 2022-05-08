@@ -9,9 +9,9 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <!--在此写数据，非必要不动其他文件-->
+
             <div align="center">
-                <el-input v-model="query.name" placeholder="请输入..." class="handle-input mr10"></el-input>
+                <el-input v-model="searchQuery.item" placeholder="请输入编号..." class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <br /><br />
             </div>
@@ -51,7 +51,7 @@
 <script>
 import { ref, reactive } from "vue";
 // import { ElMessage, ElMessageBox } from "element-plus";
-import { ShowForm } from "../../api/index";
+import { ShowForm,SearchForm } from "../../api/index";
 
 export default {
     name: "donate",
@@ -82,6 +82,13 @@ export default {
             page: 1,
             num: 10,
         });
+        // console.log(input1);
+        const searchQuery = reactive({
+            username: localStorage.getItem("ms_username"),
+            item: "",
+            page: 1,
+            num: 10,
+        })
         const tableData = ref([]);
         const pageTotal = ref(0);
         // 获取表格数据
@@ -89,17 +96,22 @@ export default {
             ShowForm(query).then((res) => {
                 tableData.value = res.data;
                 // pageTotal.value = res.pageTotal || 50;
-                console.log(res.data);
-                console.log(tableData);
+                // console.log(res.data);
+                // console.log(tableData);
             });
         };
         getData();
 
         // 查询操作
         const handleSearch = () => {
-            console.log("search");
+            // console.log(searchQuery.item);
             // query.pageIndex = 1;
-            // getData();
+            // const tableData = ref([]);
+            SearchForm(searchQuery).then((res)=>{
+                tableData.value=res.data;
+                console.log(res.data);
+            })
+
         };
         // 分页导航
         // const handlePageChange = (val) => {
@@ -114,6 +126,7 @@ export default {
             pageTotal,
             // editVisible,
             // form,
+            searchQuery,
             handleSearch,
             // handlePageChange,
             // handleDelete,
