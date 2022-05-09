@@ -33,6 +33,12 @@
         </el-form> 
         
     </div>
+    <div>
+      <el-button type="text">一体化编码规范</el-button>
+      <el-card class="box-card">
+         <img src="../../assets/img/code.png" class="image">
+      </el-card>
+    </div>
     <!-- 走马灯显示编码规范 -->
     <!-- <div class="block">
      <el-button type="text">一体化编码参考</el-button>
