@@ -8,7 +8,7 @@ export const fetchData = query => {
     });
 };
 //登录
-export const Login = params=> {
+export const Login = params => {
     return request({
         url: '/api/user/login',
         method: 'post',
