@@ -44,6 +44,11 @@ export default {
                 title: "灾情显示",
             },
             {
+                icon: "el-icon-lx-copy",
+                index: "/disasterclass",
+                title: "灾情分类",
+            },
+            {
                 icon: "el-icon-lx-cascades",
                 index: "/disasterup",
                 title: "灾情上传",
@@ -51,13 +56,14 @@ export default {
             {
                 icon: "el-icon-lx-copy",
                 index: "/disastervisual",
-                title: "灾情可视化",
+                title: "可视化数据",
             },
-            {
-                icon: "el-icon-lx-copy",
-                index: "/disastermap",
-                title: "灾情地图显示",
-            },
+            // {
+            //     icon: "el-icon-lx-copy",
+            //     index: "/disastermap",
+            //     title: "灾情地图显示",
+            // },
+
             // {
             //     icon: "el-icon-lx-copy",
             //     index: "/tabs",

@@ -40,9 +40,17 @@ const routes = [
                 path: "/disastermap",
                 name: "dashboardmap",
                 meta: {
-                    title: '灾情可视化'
+                    title: '灾情地图'
                 },
                 component: () => import ( /* webpackChunkName: "disaster-show" */ "../views/Disaster/disaster-map.vue")
+            }, 
+            {
+                path: "/disasterclass",
+                name: "dashboardclass",
+                meta: {
+                    title: '灾情分类'
+                },
+                component: () => import ( /* webpackChunkName: "disaster-show" */ "../views/Disaster/disaster-class.vue")
             }, 
 
             /* 以下为模板默认目录*/
