@@ -7,6 +7,14 @@ export const fetchData = query => {
         params: query
     });
 };
+//China地图数据
+export const fetchChina = query => {
+    return request({
+        url: './eChina.json',
+        method: 'get',
+        params: query
+    });
+};
 //登录
 export const Login = params => {
     return request({
