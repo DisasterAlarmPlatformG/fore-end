@@ -1,3 +1,4 @@
+import { h } from 'vue';
 import request from '../utils/request';
 
 export const fetchData = query => {
@@ -15,8 +16,17 @@ export const fetchChina = query => {
         params: query
     });
 };
+//经纬度转化
+export const geocode = query => {
+    return request({
+        url: 'https://restapi.amap.com/v3/geocode/geo',
+        method: 'get',
+        params: query
+    });
+};
+
 //登录
-export const Login = params => {
+export const Login = (params) => {
     return request({
         url: '/api/user/login',
         method: 'post',
@@ -75,6 +85,23 @@ export const ChangeDesc = query=> {
     });
 };
 
+//查询所有用户
+export const AllUser = query=> {
+    return request({
+        url: '/api/admin/alluser',
+        method: 'get',
+        params: query
+    });
+};
+
+//删除用户
+export const DeleteUser = query=> {
+    return request({
+        url: '/api/admin/deleteuser',
+        method: 'get',
+        params: query
+    });
+};
 
 //当前灾害总数
 export const CountDis = () => {
@@ -91,3 +118,27 @@ export const CountDisProvince = () => {
         method: 'get',
     });
 };
+
+//单文件上传
+export const UploadFile = params => {
+    return request({
+        url: '/api/uploadFile',
+        method: 'post',
+        data: params,
+        headers: { "Content-Type": "multipart/form-data" },
+    });
+};
+
+//多文件上传
+
+//文件下载
+
+//通过灾情码查询文件
+export const SelectFile = query => {
+    return request({
+        url: '/api/selectFile',
+        method: 'get',
+        params: query,
+    });
+};
+

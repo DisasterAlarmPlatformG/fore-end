@@ -52,6 +52,14 @@ const routes = [
                 },
                 component: () => import ( /* webpackChunkName: "disaster-show" */ "../views/Disaster/disaster-class.vue")
             }, 
+            {
+                path: "/disastertest",
+                name: "dashboardtest",
+                meta: {
+                    title: '测试页面'
+                },
+                component: () => import ( /* webpackChunkName: "disaster-show" */ "../views/Disaster/disaster-test.vue")
+            }, 
 
             /* 以下为模板默认目录*/
 

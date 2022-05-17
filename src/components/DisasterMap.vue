@@ -11,19 +11,20 @@
     id="myChart"
     :style="{ width: '1000px', height: '600px' }"
   ></div>
-
 </template>
 
 <script>
-import { getCurrentInstance, ref, onMounted,reactive } from "vue";
-import { fetchChina } from "../api/index";
+import { getCurrentInstance, ref, onMounted, reactive } from "vue";
+import { geocode, fetchChina } from "../api/index";
 export default {
   setup() {
     const temp = reactive({
-      name:"衡水",
-      position:[115.6754061376161, 37.745191408077424],
-      desc:"发生地震"
+      name: "衡水",
+      position: [115.6754061376161, 37.745191408077424],
+      desc: "发生地震",
     });
+
+
 
     const dealWithData = () => {
       var geoCoordMap = {
@@ -43,53 +44,72 @@ export default {
     };
 
     const ChangeData = (OneDis) => {
+      var pos = [115.6754061376161, 37.745191408077424];
       var data = [];
-      data.push({
-        name: OneDis.name,
-        value: OneDis.position,
-        desc: OneDis.desc,
+
+      const query = reactive({
+        address: OneDis.position,
+        key: "4ee296ae1e7086b5d07c9f94a38a793b",
       });
 
-      var option_ = {
-        series: [
-          {
-            name: "Top 5",
-            type: "effectScatter",
-            coordinateSystem: "geo",
-            data: data,
-            symbolSize: 15,
-            tooltip: {
-              formatter(value) {
-                return value.data.name + "<br/>" + "描述：" + value.data.desc;
+      geocode(query)
+        .then((res) => {
+          var v = res.geocodes[0].location;
+          console.log(v);
+          console.log(v.indexOf(","));
+          var i = v.indexOf(",");
+          pos = [v.substring(0, i), v.substring(i + 1)];
+
+          data.push({
+            name: OneDis.name,
+            value: pos,
+            desc: OneDis.desc,
+          });
+
+          var option_ = {
+            series: [
+              {
+                name: "Top 5",
+                type: "effectScatter",
+                coordinateSystem: "geo",
+                data: data,
+                symbolSize: 15,
+                tooltip: {
+                  formatter(value) {
+                    return (
+                      value.data.name + "<br/>" + "描述：" + value.data.desc
+                    );
+                  },
+                  show: true,
+                },
+                encode: {
+                  value: 2,
+                },
+                showEffectOn: "render",
+                rippleEffect: {
+                  brushType: "stroke",
+                  color: "#0efacc",
+                  period: 9,
+                  scale: 5,
+                },
+                hoverAnimation: true,
+                label: {
+                  formatter: "{b}",
+                  position: "right",
+                  show: true,
+                },
+                itemStyle: {
+                  color: "#0efacc",
+                  shadowBlur: 2,
+                  shadowColor: "#333",
+                },
+                zlevel: 1,
               },
-              show: true,
-            },
-            encode: {
-              value: 2,
-            },
-            showEffectOn: "render",
-            rippleEffect: {
-              brushType: "stroke",
-              color: "#0efacc",
-              period: 9,
-              scale: 5,
-            },
-            hoverAnimation: true,
-            label: {
-              formatter: "{b}",
-              position: "right",
-              show: true,
-            },
-            itemStyle: {
-              color: "#0efacc",
-              shadowBlur: 2,
-              shadowColor: "#333",
-            },
-            zlevel: 1,
-          },
-        ],
-      };
-      myChart.setOption(option_);
+            ],
+          };
+          myChart.setOption(option_);
+        })
+        .catch();
     };
 
     let internalInstance = getCurrentInstance();
