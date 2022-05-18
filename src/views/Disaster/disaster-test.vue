@@ -7,6 +7,14 @@
         </el-breadcrumb-item>
         <el-breadcrumb-item>测试页面</el-breadcrumb-item>
       </el-breadcrumb>
+
+      <input
+        ref="uploadInput"
+        type="file"
+        class="dl-none"
+        name="icon"
+        @change="dealfilechange"
+      />
     </div>
 
     <div>
@@ -42,7 +50,30 @@ export default {
       console.log("show map : " + isShow);
     };
 
-    //控制切换位置
+    //
+    const uploadInput = ref<HTMLElement | null>(null);
+    const formData = new FormData();
+    const dealfilechange = (e: Event) => {
+      const input = e.target as HTMLInputElement;
+      let files = input.files;
+      if (files) {
+        console.log(files[0]);
+        formData.append("file", files[0]);
+      }
+    };
+    const uploadFile = () => {
+      formData.append("username", "gong");
+      formData.append("disasterid", "130105005021202205051154011000101003");
+      UploadFile(formData)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log("fail");
+        });
+    };
+
+    //控制切换坐标点
     const RefChilde = ref();
 
     const temp = reactive({
@@ -65,14 +96,6 @@ export default {
       RefChilde.value.ChangeData(temp);
     };
 
-    const uploadFile = () => {
-      let formData = new FormData();
-      formData.append("username", "gong");
-      formData.append("disasterid", "130105005021202205051154011000101003");
-    };
-
-
-
     return {
       isShow,
       showMap,
@@ -80,6 +103,8 @@ export default {
       fnCallChild,
       fnCallChild2,
       uploadFile,
+      uploadInput,
+      dealfilechange,
     };
   },
 };
