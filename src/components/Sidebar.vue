@@ -62,6 +62,11 @@ export default {
         title: "灾情显示",
       },
       {
+        icon: "el-icon-lx-home",
+        index: "/disasterdetail",
+        title: "灾情详情",
+      },
+      {
         icon: "el-icon-lx-copy",
         index: "/disasterclass",
         title: "灾情分类",

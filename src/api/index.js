@@ -33,6 +33,10 @@ export const Login = (params) => {
         data: params
     });
 };
+
+
+//灾情管理------------------------------------------------------------
+
 //新增灾情数据
 export const UpForm = query=> {
     return request({
@@ -65,6 +69,67 @@ export const SearchFormByCategory = query=> {
         params: query
     });
 };
+
+
+//单文件上传
+export const UploadFile = params => {
+    return request({
+        url: '/api/uploadFile',
+        method: 'post',
+        data: params,
+        headers: { "Content-Type": "multipart/form-data" },
+    });
+};
+
+//多文件上传
+export const UploadMultipleFile = params => {
+    return request({
+        url: '/api/uploadMultipleFiles',
+        method: 'post',
+        data: params,
+        headers: { "Content-Type": "multipart/form-data" },
+    });
+};
+
+//文件下载
+export const DownLoadFile = (name) => {
+    return request({
+        url: '/api/downloadFile/'+name,
+        method: 'get',
+    });
+};
+
+//通过灾情码查询文件
+export const SelectFile = query => {
+    return request({
+        url: '/api/selectFile',
+        method: 'get',
+        params: query,
+    });
+};
+
+
+
+//可视化--------------------------------------------------------------------------
+
+//当前灾害总数
+export const CountDis = () => {
+    return request({
+        url: '/api/vis/all_disaster_count',
+        method: 'get',
+    });
+};
+
+//不同省的灾害总数
+export const CountDisProvince = () => {
+    return request({
+        url: '/api/vis/province_count',
+        method: 'get',
+    });
+};
+
+
+//后台管理--------------------------------------------------------------------------
 
 //新增用户
 export const NewAdmin = params=> {
@@ -100,45 +165,6 @@ export const DeleteUser = query=> {
         url: '/api/admin/deleteuser',
         method: 'get',
         params: query
-    });
-};
-
-//当前灾害总数
-export const CountDis = () => {
-    return request({
-        url: '/api/vis/all_disaster_count',
-        method: 'get',
-    });
-};
-
-//不同省的灾害总数
-export const CountDisProvince = () => {
-    return request({
-        url: '/api/vis/province_count',
-        method: 'get',
-    });
-};
-
-//单文件上传
-export const UploadFile = params => {
-    return request({
-        url: '/api/uploadFile',
-        method: 'post',
-        data: params,
-        headers: { "Content-Type": "multipart/form-data" },
-    });
-};
-
-//多文件上传
-
-//文件下载
-
-//通过灾情码查询文件
-export const SelectFile = query => {
-    return request({
-        url: '/api/selectFile',
-        method: 'get',
-        params: query,
     });
 };
 

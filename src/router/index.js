@@ -53,6 +53,14 @@ const routes = [
                 component: () => import ( /* webpackChunkName: "disaster-show" */ "../views/Disaster/disaster-class.vue")
             }, 
             {
+                path: "/disasterdetail",
+                name: "dashboarddetail",
+                meta: {
+                    title: '灾情详情'
+                },
+                component: () => import ( /* webpackChunkName: "disaster-show" */ "../views/Disaster/disaster-detail.vue")
+            }, 
+            {
                 path: "/disastertest",
                 name: "dashboardtest",
                 meta: {

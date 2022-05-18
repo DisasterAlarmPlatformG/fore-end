@@ -22,6 +22,7 @@
       <el-button type="text" @click="fnCallChild">change</el-button>
       <el-button type="text" @click="fnCallChild2">change2</el-button>
       <el-button type="text" @click="uploadFile">单文件上传测试</el-button>
+      <el-button type="text" @click="todetail">详情描述</el-button>
       <div v-show="isShow">
         <v-map ref="RefChilde" />
       </div>
@@ -37,6 +38,8 @@ import vMap from "../../components/DisasterMap.vue";
 
 import { UploadFile } from "../../api/index";
 
+import { useRouter } from "vue-router";
+
 export default {
   components: {
     vMap,
@@ -50,7 +53,7 @@ export default {
       console.log("show map : " + isShow);
     };
 
-    //
+    //文件上传
     const uploadInput = ref<HTMLElement | null>(null);
     const formData = new FormData();
     const dealfilechange = (e: Event) => {
@@ -96,6 +99,14 @@ export default {
       RefChilde.value.ChangeData(temp);
     };
 
+    //查看详情 && 页面切换
+    const router = useRouter();
+    const todetail = () => {
+       router.push({
+        name: 'dashboarddetail',
+        query:{id:"130105005021202205051154011001101005"}
+      })
+    };
     return {
       isShow,
       showMap,
@@ -105,6 +116,7 @@ export default {
       uploadFile,
       uploadInput,
       dealfilechange,
+      todetail,
     };
   },
 };

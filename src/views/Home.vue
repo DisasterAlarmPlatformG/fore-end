@@ -3,7 +3,7 @@
         <v-header />
         <v-sidebar />
         <div class="content-box" :class="{ 'content-collapse': collapse }">
-            <v-tags></v-tags>
+            <!-- <v-tags></v-tags> -->
             <div class="content">
                 <router-view v-slot="{ Component }">
                     <transition name="move" mode="out-in">
