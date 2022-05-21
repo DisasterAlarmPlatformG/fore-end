@@ -18,15 +18,64 @@
         <v-map ref="RefChilde" />
       </div>
     </div>
+
+    <div>
+
+     <el-button type="text">灾情文件上传</el-button> 
+
+      <el-form>
+              <!-- 上传 -->
+<!--               
+              <el-form-item label="用户名" prop="username">
+                <el-input v-model="param.username"></el-input>
+                  </el-form-item>
+              
+              <el-form-item label="灾害码" prop="code">
+                <el-input v-model="param.code" ></el-input>
+                  </el-form-item> -->
+
+  <!-- 单文件上传 -->
+<el-upload
+  class="upload-demo"
+  ref="upload"
+  action="api/uploadFile"
+  :on-preview="handlePreview"
+  :on-remove="handleRemove"
+  :data="objData"
+  :auto-upload="false"
+  style=" margin-left:10%">
+  <el-button style="margin-top:60px;" size="small" type="primary">选取文件</el-button>
+  <el-button style=" margin-top:60px; margin-left: 30px;" size="small" type="success" @click.stop="submitUpload">上传到服务器</el-button>
+  <div  class="el-upload__tip">不限文件格式。不超过5MB</div>
+</el-upload>
+<!-- <el-upload
+  class="upload-demo"
+  ref="upload"
+  action="api/uploadMultipleFiles"
+  :on-preview="handlePreview"
+  :on-remove="handleRemove"
+  :data="objData1"
+  :auto-upload="false">
+  <el-button style="margin-top:60px;" size="small" type="primary">选取文件</el-button>
+  <el-button style=" margin-top:60px; margin-left: 30px;" size="small" type="success" @click.stop="submitUploadM">上传到服务器</el-button>
+  <div  class="el-upload__tip">不限文件格式。不超过5MB</div>
+</el-upload> -->
+        </el-form> 
+        
+    </div>
+    <div>
+       <el-button type="text">灾情文件列表</el-button> 
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref,getCurrentInstance } from "vue";
 import { onMounted } from "@vue/runtime-core";
 //import * as echarts from 'echarts'
 import { useRoute } from "vue-router";
-
+import { ElMessage } from "element-plus";
+// import axios from 'axios'
 import vMap from "../../components/DisasterMap.vue";
 
 export default {
@@ -35,6 +84,7 @@ export default {
      vMap,
   },
   setup() {
+
     onMounted(() => {
       //初始化灾情码
       if (route.query.id) {
@@ -74,15 +124,48 @@ export default {
       RefChilde.value.ChangeData(temp);
     };
 
+ const {proxy} = getCurrentInstance()
+
+        const param = reactive({
+            username: localStorage.getItem("ms_username"),
+            code:"130105005021202205051154011001101004"
+            // description: ""
+        });
+        
+        const objData = reactive({
+            username: localStorage.getItem("ms_username"),
+            disasterid: "130105005021202205051154011001101004"
+        });
+
+          const submitUpload = () => {
+          console.log(123)
+          proxy.$refs.upload.submit()
+        }
+       
+        const handlePreview = (a) => {
+          console.log(a)
+        }
+        
+        const handleRemove = () => {
+          
+        }
     return {
       disasterid,
       showMap,
       RefChilde,
       isShow,
+        param,
+            objData,
+            submitUpload,
+            // submitUploadM,
+            handleRemove,
+            handlePreview
     };
   },
 };
 </script>
 
 <style>
+
+
 </style>
