@@ -21,7 +21,14 @@
 
                     <el-table-column prop="disasterId" label="编号" width="186" align="center"></el-table-column>
 
-                    <el-table-column prop="locationVillage" align="center" label="参考位置" width="150"></el-table-column>
+                    <el-table-column prop="locationCity,lacationProvince,locationCounty,locationTown" align="center"
+                        label="参考位置" width="150">
+
+                        <template #default="scope">
+                            {{ scope.row.locationProvince }}-{{ scope.row.locationCity }}
+                            -{{ scope.row.locationCounty }}-{{ scope.row.locationTown }}
+                        </template>
+                    </el-table-column>
 
                     <el-table-column prop="createTime" label="时间" align="center" width="120"></el-table-column>
 
@@ -57,26 +64,6 @@ export default {
     name: "donate",
     setup() {
 
-        // const tableData = ref([
-        //     {
-        //         date: '2021.5.1',
-        //         class: '飓风',
-        //         code: '10010010',
-        //         address: '北京市',
-
-        //     }, {
-        //         date: '2021.5.1',
-        //         class: '地震',
-        //         code: '10010010',
-        //         address: '北京市',
-        //     }, {
-        //         date: '2021.5.1',
-        //         class: '海啸',
-        //         code: '10010010',
-        //         address: '北京市',
-        //     },
-        // ])
-
         const query = reactive({
             username: localStorage.getItem("ms_username"),
             page: 1,
@@ -91,16 +78,17 @@ export default {
         })
         const tableData = ref([]);
         const pageTotal = 10;
+
         // 获取表格数据
         const getData = () => {
             ShowForm(query).then((res) => {
                 tableData.value = res.data;
                 // pageTotal.value = res.pageTotal || 50;
                 // console.log(res.data);
-                // console.log(tableData);
+                console.log(tableData);
             });
         };
-        getData();
+        // getData();
 
         // 查询操作
         const handleSearch = () => {
