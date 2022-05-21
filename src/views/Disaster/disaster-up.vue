@@ -23,7 +23,9 @@
               <el-form-item label="灾情描述" prop="description">
                 <el-input type="textarea" v-model="param.description" placeholder="description"></el-input>
                   </el-form-item>
+                
   
+
         
           <el-form-item>
           <el-button type="primary" @click="submitForm()">提交</el-button>
@@ -34,40 +36,66 @@
         
     </div>
     <div>
+      <el-form>
+              <!-- 上传 -->
+              
+              <el-form-item label="用户名" prop="username">
+                <el-input v-model="param.username"></el-input>
+                  </el-form-item>
+              
+              <el-form-item label="灾害码" prop="code">
+                <el-input v-model="param.code" ></el-input>
+                  </el-form-item>
+
+  <!-- 单文件上传 -->
+<el-upload
+  class="upload-demo"
+  ref="upload"
+  action="api/uploadFile"
+  :on-preview="handlePreview"
+  :on-remove="handleRemove"
+  :data="objData"
+  :auto-upload="false">
+  <el-button style="margin-top:60px;" size="small" type="primary">选取文件</el-button>
+  <el-button style=" margin-top:60px; margin-left: 30px;" size="small" type="success" @click.stop="submitUpload">上传到服务器</el-button>
+  <div  class="el-upload__tip">不限文件格式。不超过5MB</div>
+</el-upload>
+        </el-form> 
+        
+    </div>
+    <div>
       <el-button type="text">一体化编码规范</el-button>
       <el-card class="box-card">
          <img src="../../assets/img/code.png" class="image">
       </el-card>
     </div>
-    <!-- 走马灯显示编码规范 -->
-    <!-- <div class="block">
-     <el-button type="text">一体化编码参考</el-button>
-     <el-carousel trigger="click" height="700px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <el-card :body-style="{ padding: '0px' }">
-        </el-card>
-      </el-carousel-item>
-     </el-carousel>
-    </div> -->
+
+  
+
     </div>
 </template>
 
 
 <script>
-import { ref, reactive } from "vue";
+import { ref, reactive, getCurrentInstance } from "vue";
 import {onMounted} from "vue";
 import {UpForm}  from "../../api/index";
 import { ElMessage } from "element-plus";
+// import axios from 'axios'
 
  export default {
    setup(){ 
-
+        const {proxy} = getCurrentInstance()
         const param = reactive({
             username: localStorage.getItem("ms_username"),
             code: "",
             description: ""
         });
-
+        
+        const objData = reactive({
+            username: localStorage.getItem("ms_username"),
+            disasterid: param.code
+        });
         const rules = {
          username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -94,7 +122,17 @@ import { ElMessage } from "element-plus";
             });
 
         };
-
+        const submitUpload = () => {
+          console.log(123)
+          proxy.$refs.upload.submit()
+        }
+        const handlePreview = (a) => {
+          console.log(a)
+        }
+        
+        const handleRemove = () => {
+          
+        }
         const resetForm = () =>{
           param.username = localStorage.getItem("ms_username");
           param.code = '';
@@ -135,6 +173,10 @@ import { ElMessage } from "element-plus";
             upform,
             submitForm,
             resetForm,
+            objData,
+            submitUpload,
+            handleRemove,
+            handlePreview
         };
 
 
