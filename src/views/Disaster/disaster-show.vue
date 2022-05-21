@@ -53,7 +53,7 @@
                 </el-table>
                 <div class="pagination">
                     <el-pagination background layout="total, prev, pager, next" :current-page="query.page"
-                        :page-size="query.num" :total="pageTotal" @current-change="handlePageChange">
+                        :page-size="query.num" :total="pageTotal.total" @current-change="handlePageChange">
                     </el-pagination>
                 </div>
             </div>
@@ -81,21 +81,27 @@ export default {
             username: localStorage.getItem("ms_username"),
             item: "",
             page: 1,
-            num: 10,
+            num: 6,
         })
         const tableData = ref([]);
-        const pageTotal = 10;
+        const pageTotal = reactive({
+            total:200
+        });;
 
         // 获取表格数据
         const getData = () => {
             ShowForm(query).then((res) => {
                 tableData.value = res.data;
                 // pageTotal.value = res.pageTotal || 50;
-                // console.log(res.data);
-                console.log(tableData);
+                
+                // console.log(tableData);
+                // query.num=res.pageSize;
+                query.page=res.currentPage;
+                pageTotal.total=res.sumRow;
+                // console.log(res.sumPage);
             });
         };
-        // getData();
+        getData();
 
         // 查询操作
         const handleSearch = () => {
