@@ -43,7 +43,7 @@
 
                     <el-table-column prop="carrier" align="center" label="数据载体" width="120"></el-table-column>
 
-                    <el-table-column prop="disasterSub" label="分类" align="center" width="80"></el-table-column>
+                    <el-table-column prop="disasterMain" label="分类" align="center" width="80"></el-table-column>
 
                     <el-table-column prop="disasterTarget" label="标签" align="center" width="100"></el-table-column>
 
