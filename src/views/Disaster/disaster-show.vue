@@ -22,25 +22,32 @@
                     <el-table-column prop="disasterId" label="编号" width="186" align="center"></el-table-column>
 
                     <el-table-column prop="locationCity,lacationProvince,locationCounty,locationTown" align="center"
-                        label="参考位置" width="150">
+                        label="参考位置" width="270">
 
                         <template #default="scope">
-                            {{ scope.row.locationProvince }}-{{ scope.row.locationCity }}
-                            -{{ scope.row.locationCounty }}-{{ scope.row.locationTown }}
+                            {{ scope.row.locationProvince }}
+                            -{{ scope.row.locationCity }}
+                            -{{ scope.row.locationCounty }}
+                            -{{ scope.row.locationTown }}
                         </template>
                     </el-table-column>
 
-                    <el-table-column prop="createTime" label="时间" align="center" width="120"></el-table-column>
+                    <el-table-column prop="createTime" label="时间" align="center" width="200">
+                        <template #default="scope">
+                            {{ dateTransform('YYYY-mm-dd HH:MM', scope.row.createTime) }}
+                        </template>
+
+                    </el-table-column>
 
                     <el-table-column prop="sourceSub" label="数据源" align="center" width="150"></el-table-column>
 
                     <el-table-column prop="carrier" align="center" label="数据载体" width="120"></el-table-column>
 
-                    <el-table-column prop="disasterSub" label="分类" align="center" width="120"></el-table-column>
+                    <el-table-column prop="disasterSub" label="分类" align="center" width="80"></el-table-column>
 
-                    <el-table-column prop="disasterTarget" label="标签" align="center" width="140"></el-table-column>
+                    <el-table-column prop="disasterTarget" label="标签" align="center" width="100"></el-table-column>
 
-                    <el-table-column prop="description" label="描述" align="center" width="200"></el-table-column>
+                    <el-table-column prop="description" label="描述" align="center" width="80"></el-table-column>
 
 
                 </el-table>
@@ -108,6 +115,31 @@ export default {
             getData();
         };
 
+        //时间解析函数
+        const dateTransform = (fmt, date) => {
+            let ret = "";
+            date = new Date(date);
+            const opt = {
+                'Y+': date.getFullYear().toString(), // 年
+                'm+': (date.getMonth() + 1).toString(), // 月
+                'd+': date.getDate().toString(), // 日
+                'H+': date.getHours().toString(), // 时
+                'M+': date.getMinutes().toString(), // 分
+                'S+': date.getSeconds().toString() // 秒
+                // 有其他格式化字符需求可以继续添加，必须转化成字符串
+            }
+            for (let k in opt) {
+                ret = new RegExp('(' + k + ')').exec(fmt)
+                if (ret) {
+                    fmt = fmt.replace(
+                        ret[1],
+                        ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
+                    )
+                }
+            }
+            return fmt
+        };
+
 
         return {
             query,
@@ -118,6 +150,7 @@ export default {
             searchQuery,
             handleSearch,
             handlePageChange,
+            dateTransform,
             // handleDelete,
             // handleEdit,
             // saveEdit,
