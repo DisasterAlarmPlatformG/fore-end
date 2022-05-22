@@ -5,15 +5,17 @@
                 <el-breadcrumb-item>
                     <i class="el-icon-lx-calendar"></i> 首页
                 </el-breadcrumb-item>
-                <el-breadcrumb-item>灾情显示</el-breadcrumb-item>
+                <el-breadcrumb-item>分类查询 / 次生灾害数据</el-breadcrumb-item>
+                <!-- 由于非动态sidebar使用的使静态数据，此处只能使用静态数据来模拟路由路径 -->
             </el-breadcrumb>
         </div>
         <div class="container">
 
             <div align="center">
-                <el-input v-model="searchQuery.item" placeholder="请输入编号..." class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-                <br /><br />
+                <!-- <el-input v-model="searchQuery.item" placeholder="请输入编号..." class="handle-input mr10"></el-input>
+                <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button> -->
+
+                <br />
             </div>
             <div>
                 <el-table :data="tableData" border class="table" ref="multipleTable"
@@ -65,7 +67,7 @@
 <script>
 import { ref, reactive } from "vue";
 // import { ElMessage, ElMessageBox } from "element-plus";
-import { ShowForm, SearchForm } from "../../api/index";
+import { SearchFormByCategory } from "../../api/index";
 
 export default {
     name: "donate",
@@ -73,47 +75,49 @@ export default {
 
         const query = reactive({
             username: localStorage.getItem("ms_username"),
+            category: 2,
+            //2代表查询次生灾害数据
             page: 1,
             num: 6,
         });
 
-        const searchQuery = reactive({
-            username: localStorage.getItem("ms_username"),
-            item: "",
-            page: 1,
-            num: 6,
-        })
+        // const searchQuery = reactive({
+        //     username: localStorage.getItem("ms_username"),
+        //     item: "",
+        //     page: 1,
+        //     num: 6,
+        // })
         const tableData = ref([]);
         const pageTotal = reactive({
-            total:200
+            total: 200
         });;
 
         // 获取表格数据
         const getData = () => {
-            ShowForm(query).then((res) => {
+            SearchFormByCategory(query).then((res) => {
                 tableData.value = res.data;
                 // pageTotal.value = res.pageTotal || 50;
-                
+
                 // console.log(tableData);
                 // query.num=res.pageSize;
-                query.page=res.currentPage;
-                pageTotal.total=res.sumRow;
-                // console.log(res.sumPage);
+                query.page = res.currentPage;
+                pageTotal.total = res.sumRow;
+                // console.log(res);
             });
         };
         getData();
 
         // 查询操作
-        const handleSearch = () => {
-            // console.log(searchQuery.item);
-            // query.pageIndex = 1;
-            // const tableData = ref([]);
-            SearchForm(searchQuery).then((res) => {
-                tableData.value = res.data;
-                // console.log(res.data);
-            })
+        // const handleSearch = () => {
+        //     // console.log(searchQuery.item);
+        //     // query.pageIndex = 1;
+        //     // const tableData = ref([]);
+        //     SearchForm(searchQuery).then((res) => {
+        //         tableData.value = res.data;
+        //         // console.log(res.data);
+        //     })
 
-        };
+        // };
         // 分页导航
         const handlePageChange = (val) => {
             query.page = val;
@@ -153,8 +157,8 @@ export default {
             pageTotal,
             // editVisible,
             // form,
-            searchQuery,
-            handleSearch,
+            // searchQuery,
+            // handleSearch,
             handlePageChange,
             dateTransform,
             // handleDelete,

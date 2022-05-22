@@ -1,15 +1,7 @@
 <template>
   <div class="sidebar">
-    <el-menu
-      class="sidebar-el-menu"
-      :default-active="onRoutes"
-      :collapse="collapse"
-      background-color="#324157"
-      text-color="#bfcbd9"
-      active-text-color="#20a0ff"
-      unique-opened
-      router
-    >
+    <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" background-color="#324157"
+      text-color="#bfcbd9" active-text-color="#20a0ff" unique-opened router>
       <template v-for="item in items">
         <template v-if="item.subs">
           <el-submenu :index="item.index" :key="item.index">
@@ -18,22 +10,12 @@
               <span>{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.subs">
-              <el-submenu
-                v-if="subItem.subs"
-                :index="subItem.index"
-                :key="subItem.index"
-              >
+              <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
                 <template #title>{{ subItem.title }}</template>
-                <el-menu-item
-                  v-for="(threeItem, i) in subItem.subs"
-                  :key="i"
-                  :index="threeItem.index"
-                >
-                  {{ threeItem.title }}</el-menu-item
-                >
+                <el-menu-item v-for="(threeItem, i) in subItem.subs" :key="i" :index="threeItem.index">
+                  {{ threeItem.title }}</el-menu-item>
               </el-submenu>
-              <el-menu-item v-else :index="subItem.index" :key="subItem.index"
-                >{{ subItem.title }}
+              <el-menu-item v-else :index="subItem.index" :key="subItem.index">{{ subItem.title }}
               </el-menu-item>
             </template>
           </el-submenu>
@@ -70,6 +52,34 @@ export default {
         icon: "el-icon-lx-copy",
         index: "/disasterclass",
         title: "灾情分类",
+        //--------------------------------------此处sub代替router的children逻辑
+        subs: [
+          {
+            icon: "el-icon-lx-copy",
+            index: "/casualty",
+            title: "伤亡数据"
+          },
+          {
+            icon: "el-icon-lx-copy",
+            index: "/building",
+            title: "房屋数据"
+          },
+          {
+            icon: "el-icon-lx-copy",
+            index: "/secondary",
+            title: "次生灾害数据"
+          },
+          {
+            icon: "el-icon-lx-copy",
+            index: "/lifeline",
+            title: "生命线数据"
+          },
+          {
+            icon: "el-icon-lx-copy",
+            index: "/earthquake",
+            title: "震情"
+          },
+        ],
       },
       {
         icon: "el-icon-lx-cascades",
@@ -186,13 +196,16 @@ export default {
   bottom: 0;
   overflow-y: scroll;
 }
+
 .sidebar::-webkit-scrollbar {
   width: 0;
 }
+
 .sidebar-el-menu:not(.el-menu--collapse) {
   width: 250px;
 }
-.sidebar > ul {
+
+.sidebar>ul {
   height: 100%;
 }
 </style>
