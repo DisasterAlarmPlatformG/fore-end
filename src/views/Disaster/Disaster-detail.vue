@@ -65,30 +65,36 @@
             </div> -->
             <div>
                 <el-table :data="tableData" border class="table" ref="multipleTable"
-                    header-cell-class-name="table-header">
+                    header-cell-class-name="table-header" width="1510">
 
-                    <el-table-column prop="id" label="编号" width="186" align="center"></el-table-column>
+                    <el-table-column prop="id" label="编号" width="140" align="center"></el-table-column>
 
-                    <el-table-column prop="disasterId" align="center" label="灾情码" width="150"></el-table-column>
+                    <el-table-column prop="disasterId" align="center" label="灾情码" width="330"></el-table-column>
 
-                    <el-table-column prop="fileName" label="文件名称" align="center" width="120"></el-table-column>
+                    <el-table-column prop="fileName" label="文件名称" align="center" width="240"></el-table-column>
 
-                    <el-table-column prop="fileLocation" label="文件下载" align="center" width="150" >
+                    <!-- <el-table-column prop="fileLocation" label="文件下载" align="center" width="260" >
 
-                    </el-table-column>
+                    </el-table-column> -->
 
-                    <el-table-column prop="fileType" align="center" label="文件类型" width="120"></el-table-column>
+                    <el-table-column prop="fileType" align="center" label="文件类型" width="220"></el-table-column>
 
                     <el-table-column prop="fileSize" label="文件大小" align="center" width="120"></el-table-column>
 
-                    <el-table-column prop="uploadTime" label="上传时间" align="center" width="140"></el-table-column>
+                    <el-table-column prop="uploadTime" label="上传时间" align="center" width="260"></el-table-column>
 
-                    <el-table-column prop="uploadId" label="上传用户" align="center" width="200"></el-table-column>
- <!-- <el-table-column  label="文件下载" align="center" width="150">
-      
-       <el-link type="success">{{tableData.fileLocation}}</el-link>
-        
-    </el-table-column> -->
+                    <el-table-column prop="uploadId" label="上传用户" align="center" width="150"></el-table-column>
+
+                    <el-table-column prop="fileLocation" label="文件下载" align="center" width="170">
+                    
+                    <template #default="scope" >
+
+                      <el-button type="primary" @click="download(scope.row.fileLocation)">下载</el-button>
+
+                    </template>
+                    
+
+                    </el-table-column>
 
                 </el-table>
                 
@@ -116,13 +122,12 @@ import { ElMessage } from "element-plus";
 import vMap from "../../components/DisasterMap.vue";
 import {SelectFile} from "../../api/index";
 
-
-
 export default {
   name: "father",
   components: {
      vMap,
   },
+  
   setup() {
 
     onMounted(() => {
@@ -130,7 +135,7 @@ export default {
       if (route.query.id) {
         disasterid.value = route.query.id.toString();
       } else {
-        disasterid.value = "130105005021202205051154011001101004";
+        disasterid.value = "130105005021202205051154011001101005";
       }
 
       //初始化地图
@@ -138,8 +143,8 @@ export default {
     });
     //路由配置
     const route = useRoute();
-    const disasterid = ref("130105005021202205051154011001101004");
-
+    const disasterid = ref("130105005021202205051154011001101005");
+    
     //控制地图组件显示
     const isShow = ref(true);
     const showMap = () => {
@@ -174,7 +179,7 @@ export default {
         
         const objData = reactive({
             username: localStorage.getItem("ms_username"),
-            disasterid: 130105005021202205051154011001101004
+            disasterid:disasterid
         });
 
           const submitUpload = () => {
@@ -191,20 +196,27 @@ export default {
         }
          const tableData = ref([]);
 
-
-
         // 获取表格数据
         const query = reactive({
-            disasterid:"130105005021202205051154011001101004"
+            // disasterid:"130105005021202205051154011001101004"
+            disasterid:disasterid
         });
         const getData = () => {
             SelectFile(query).then((res) => {
               // console.log(res.data);
                 tableData.value = res.data;
+                
                
             });
         };
         getData();
+        
+        const download = (value)=>{
+
+          //  console.log(value)
+           window.open(value,"_blank")
+       
+        }
   
         
     return {
@@ -220,16 +232,10 @@ export default {
       handlePreview,
       query,
      tableData,
+     download
     };
   },
-  // methods:{
-  //   download(tableData.fileLocation){
-  //         if(tableData.fileLocation){
-  //           window.open(tableData.fileLocation,"_blank")
-  //         }
-  //         console.log(this.tableData.fileLocation)
-  //       }}
-};
+}
 </script>
 
 <style>
