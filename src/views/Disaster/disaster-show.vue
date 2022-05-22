@@ -16,8 +16,8 @@
                 <br /><br />
             </div>
             <div>
-                <el-table :data="tableData" border class="table" ref="multipleTable"
-                    header-cell-class-name="table-header">
+                <el-table :data="tableData" :row-class-name="tableRowClassName" @cell-click="cellClick" border
+                    class="table" ref="multipleTable" header-cell-class-name="table-header">
 
                     <el-table-column prop="disasterId" label="编号" width="186" align="center"></el-table-column>
 
@@ -66,6 +66,7 @@
 import { ref, reactive } from "vue";
 // import { ElMessage, ElMessageBox } from "element-plus";
 import { ShowForm, SearchForm } from "../../api/index";
+import { useRouter } from "vue-router";
 
 export default {
     name: "donate",
@@ -83,9 +84,10 @@ export default {
             page: 1,
             num: 6,
         })
+
         const tableData = ref([]);
         const pageTotal = reactive({
-            total:200
+            total: 200
         });;
 
         // 获取表格数据
@@ -93,11 +95,11 @@ export default {
             ShowForm(query).then((res) => {
                 tableData.value = res.data;
                 // pageTotal.value = res.pageTotal || 50;
-                
+
                 // console.log(tableData);
                 // query.num=res.pageSize;
-                query.page=res.currentPage;
-                pageTotal.total=res.sumRow;
+                query.page = res.currentPage;
+                pageTotal.total = res.sumRow;
                 // console.log(res.sumPage);
             });
         };
@@ -146,6 +148,49 @@ export default {
             return fmt
         };
 
+        //表格颜色
+        // const tableRowClassName=({
+        //     row,
+        // }:{
+        //     row:User
+        // })=>{
+
+        // }
+
+        //表格点击跳转传参
+        //
+        //接受页面实例
+        // activated() {
+        //     let category = this.$route.query.category
+        //     let keyword = this.$route.query.keyword
+        //     if (category && keyword) {
+        //         this.getCodeResult(category, keyword)
+        //     }
+        // }
+        // methods: {
+        //     getCodeResult(category, keyword) {
+        //         this.$axios.post('api', {
+        //             category: category,
+        //             keyword: keyword
+        //         }).then(res => {
+        //             this.newsContent = res.data.content
+        //         });
+        //     }
+        // }
+        const router = useRouter();
+        const cellClick = (row) => {
+            // console.log(row);
+            router.push({
+                name: "dashboarddetail",
+                query: {
+                    //改变传递的参数
+                    id: row.disasterId,
+
+
+                }
+            })
+        }
+
 
         return {
             query,
@@ -157,6 +202,7 @@ export default {
             handleSearch,
             handlePageChange,
             dateTransform,
+            cellClick,
             // handleDelete,
             // handleEdit,
             // saveEdit,

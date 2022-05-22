@@ -18,7 +18,7 @@
                 <br />
             </div>
             <div>
-                <el-table :data="tableData" border class="table" ref="multipleTable"
+                <el-table :data="tableData" border class="table" ref="multipleTable" @cell-click="cellClick"
                     header-cell-class-name="table-header">
 
                     <el-table-column prop="disasterId" label="编号" width="186" align="center"></el-table-column>
@@ -68,6 +68,7 @@
 import { ref, reactive } from "vue";
 // import { ElMessage, ElMessageBox } from "element-plus";
 import { SearchFormByCategory } from "../../api/index";
+import { useRouter } from "vue-router";
 
 export default {
     name: "donate",
@@ -86,6 +87,7 @@ export default {
         //     page: 1,
         //     num: 6,
         // })
+        const router = useRouter();
         const tableData = ref([]);
         const pageTotal = reactive({
             total: 200
@@ -148,6 +150,18 @@ export default {
             }
             return fmt
         };
+         const cellClick = (row) => {
+            // console.log(row);
+            router.push({
+                name: "dashboarddetail",
+                query: {
+                    //改变传递的参数
+                    id: row.disasterId,
+
+
+                }
+            })
+        }
 
 
         return {
@@ -160,6 +174,7 @@ export default {
             // handleSearch,
             handlePageChange,
             dateTransform,
+            cellClick,
             // handleDelete,
             // handleEdit,
             // saveEdit,
