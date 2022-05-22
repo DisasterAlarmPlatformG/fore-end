@@ -11,14 +11,6 @@
     <div class="container">
       <h4>灾情码：{{ disasterid }}</h4>
     </div>
-
-    <div>
-      <el-button type="text" @click="showMap()">灾情地图</el-button>
-      <div v-show="isShow">
-        <v-map ref="RefChilde" />
-      </div>
-    </div>
-
     <div>
 
      <el-button type="text">灾情文件上传</el-button> 
@@ -63,9 +55,54 @@
         </el-form> 
         
     </div>
-    <div>
+   
+ <div>
        <el-button type="text">灾情文件列表</el-button> 
+        <!-- <div align="center">
+                <el-input v-model="searchQuery.item" placeholder="请输入灾情码..." class="handle-input "></el-input>
+                <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                <br /><br />
+            </div> -->
+            <div>
+                <el-table :data="tableData" border class="table" ref="multipleTable"
+                    header-cell-class-name="table-header">
+
+                    <el-table-column prop="id" label="编号" width="186" align="center"></el-table-column>
+
+                    <el-table-column prop="disasterId" align="center" label="灾情码" width="150"></el-table-column>
+
+                    <el-table-column prop="fileName" label="文件名称" align="center" width="120"></el-table-column>
+
+                    <el-table-column prop="fileLocation" label="文件下载" align="center" width="150" >
+
+                    </el-table-column>
+
+                    <el-table-column prop="fileType" align="center" label="文件类型" width="120"></el-table-column>
+
+                    <el-table-column prop="fileSize" label="文件大小" align="center" width="120"></el-table-column>
+
+                    <el-table-column prop="uploadTime" label="上传时间" align="center" width="140"></el-table-column>
+
+                    <el-table-column prop="uploadId" label="上传用户" align="center" width="200"></el-table-column>
+ <!-- <el-table-column  label="文件下载" align="center" width="150">
+      
+       <el-link type="success">{{tableData.fileLocation}}</el-link>
+        
+    </el-table-column> -->
+
+                </el-table>
+                
+            </div>
+
     </div>
+    <div>
+      <el-button type="text" @click="showMap()">灾情地图</el-button>
+      <div v-show="isShow">
+        <v-map ref="RefChilde" />
+      </div>
+    </div>
+
+    
   </div>
 </template>
 
@@ -77,6 +114,9 @@ import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 // import axios from 'axios'
 import vMap from "../../components/DisasterMap.vue";
+import {SelectFile} from "../../api/index";
+
+
 
 export default {
   name: "father",
@@ -128,13 +168,13 @@ export default {
 
         const param = reactive({
             username: localStorage.getItem("ms_username"),
-            code:"130105005021202205051154011001101004"
+            code:130105005021202205051154011001101004
             // description: ""
         });
         
         const objData = reactive({
             username: localStorage.getItem("ms_username"),
-            disasterid: "130105005021202205051154011001101004"
+            disasterid: 130105005021202205051154011001101004
         });
 
           const submitUpload = () => {
@@ -149,19 +189,46 @@ export default {
         const handleRemove = () => {
           
         }
+         const tableData = ref([]);
+
+
+
+        // 获取表格数据
+        const query = reactive({
+            disasterid:"130105005021202205051154011001101004"
+        });
+        const getData = () => {
+            SelectFile(query).then((res) => {
+              // console.log(res.data);
+                tableData.value = res.data;
+               
+            });
+        };
+        getData();
+  
+        
     return {
       disasterid,
       showMap,
       RefChilde,
       isShow,
-        param,
-            objData,
-            submitUpload,
-            // submitUploadM,
-            handleRemove,
-            handlePreview
+      param,
+      objData,
+      submitUpload,
+     // submitUploadM,
+      handleRemove,
+      handlePreview,
+      query,
+     tableData,
     };
   },
+  // methods:{
+  //   download(tableData.fileLocation){
+  //         if(tableData.fileLocation){
+  //           window.open(tableData.fileLocation,"_blank")
+  //         }
+  //         console.log(this.tableData.fileLocation)
+  //       }}
 };
 </script>
 
