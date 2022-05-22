@@ -91,11 +91,11 @@ export default {
         index: "/disastervisual",
         title: "可视化数据",
       },
-      {
-        icon: "el-icon-lx-copy",
-        index: "/disastertest",
-        title: "测试页面",
-      },
+      // {
+      //   icon: "el-icon-lx-copy",
+      //   index: "/disastertest",
+      //   title: "测试页面",
+      // },
       // {
       //     icon: "el-icon-lx-copy",
       //     index: "/disastermap",

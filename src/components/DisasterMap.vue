@@ -64,6 +64,8 @@ export default {
             name: OneDis.name,
             value: pos,
             desc: OneDis.desc,
+            category: OneDis.category,
+            date: OneDis.date
           });
 
           var option_ = {
@@ -77,7 +79,11 @@ export default {
                 tooltip: {
                   formatter(value) {
                     return (
-                      value.data.name + "<br/>" + "描述：" + value.data.desc
+                      value.data.name 
+                      + "<br/>" + "经纬度："+value.data.value
+                      + "<br/>" + "分类："+value.data.category
+                      + "<br/>" +"描述：" + value.data.desc
+                      + "<br/>" +"上传时间："+value.data.date
                     );
                   },
                   show: true,
