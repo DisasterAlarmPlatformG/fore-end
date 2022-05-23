@@ -180,6 +180,7 @@ export default {
         const router = useRouter();
         const cellClick = (row) => {
             // console.log(row);
+            
             router.push({
                 name: "dashboarddetail",
                 query: {

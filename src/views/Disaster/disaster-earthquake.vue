@@ -18,7 +18,7 @@
                 <br />
             </div>
             <div>
-                <el-table :data="tableData" border  @cell-click="cellClick" class="table" ref="multipleTable"
+                <el-table :data="tableData" border @cell-click="cellClick" class="table" ref="multipleTable"
                     header-cell-class-name="table-header">
 
                     <el-table-column prop="disasterId" label="编号" width="186" align="center"></el-table-column>
@@ -158,7 +158,10 @@ export default {
                 query: {
                     //改变传递的参数
                     id: row.disasterId,
-
+                    address_for_search: row.locationProvince + row.locationCity + row.locationCounty + row.locationTown,
+                    date_for_view: dateTransform('YYYY-mm-dd HH:MM', row.createTime),
+                    category: row.disasterMain,
+                    description: row.description,
 
                 }
             })
