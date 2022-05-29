@@ -127,6 +127,22 @@ export const CountDisProvince = () => {
         method: 'get',
     });
 };
+//获取不同年份的灾害的总数
+export const AllDisasterCount = () => {
+    return request({
+        url: '/api/vis/all_disaster_count',
+        method: 'get',
+    });
+};
+
+//获取不同类别的灾害总数
+export const categoryDisasterCount = () => {
+    return request({
+        url: '/api/vis/category_disaster_count',
+        method: 'get',
+    });
+};
+
 
 
 //后台管理--------------------------------------------------------------------------
