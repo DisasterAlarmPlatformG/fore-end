@@ -9,26 +9,34 @@
       </el-breadcrumb>
     </div>
     <div class="container">
-
-      
+      <v-disaster-all-count />
+      <v-disaster-cat-count />
+      <v-disaster-pro-count />
+      <v-disaster-year-count />
     </div>
-
-
   </div>
 </template>
 
 <script lang="ts">
 //import * as echarts from 'echarts'
 
+import vDisasterAllCount from "../../components/DisasterAllCount.vue";
+
+import vDisasterCatCount from "../../components/DisasterCatCount.vue";
+
+import vDisasterProCount from "../../components/DisasterProCount.vue";
+
+import vDisasterYearCount from "../../components/DisasterYearCount.vue";
 
 export default {
   name: "father",
   components: {
-
+    vDisasterAllCount,
+    vDisasterCatCount,
+    vDisasterProCount,
+    vDisasterYearCount
   },
-  setup() {
-
-  },
+  setup() {},
 };
 </script>
 

@@ -130,7 +130,7 @@ export const CountDisProvince = () => {
 //获取不同年份的灾害的总数
 export const AllDisasterCount = () => {
     return request({
-        url: '/api/vis/all_disaster_count',
+        url: '/api/vis/year_disaster_count',
         method: 'get',
     });
 };
