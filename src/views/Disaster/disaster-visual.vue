@@ -9,7 +9,7 @@
       </el-breadcrumb>
     </div>
     <div class="container">
-      <v-disaster-all-count />
+      <!-- <v-disaster-all-count /> -->
       <v-disaster-cat-count />
       <v-disaster-pro-count />
       <v-disaster-year-count />

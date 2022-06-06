@@ -4,7 +4,7 @@
   <div
     class="echart"
     id="myChart"
-    :style="{ float: 'center', width: '100%', height: '400px' }"
+    :style="{  width: '60%', height: '400px' }"
   ></div>
 </template>
 

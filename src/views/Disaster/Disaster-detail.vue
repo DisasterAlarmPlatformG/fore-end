@@ -8,16 +8,16 @@
         <el-breadcrumb-item>灾情详情</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="container">
+    <!-- <div class="container">
       <h4>灾情码：{{ disasterid }}</h4>
       <h4>灾情地：{{ disastername }}</h4>
       <h4>发生时间：{{ disasterdate }}</h4>
       <h4>灾情分类：{{ disastercategory }}</h4>
       <h4>灾情描述：{{ disasterdesc }}</h4>
-    </div>
+    </div> -->
     <div>
-      <el-button type="text">灾情文件上传</el-button>
-
+      <!-- <el-button type="text">灾情文件上传</el-button> -->
+     <h4>灾情文件上传</h4>
       <el-form>
         <!-- 上传 -->
         <!--               
@@ -68,7 +68,8 @@
     </div>
 
     <div>
-      <el-button type="text">灾情文件列表</el-button>
+      <!-- <el-button type="text">灾情文件列表</el-button> -->
+       <h4>灾情文件列表</h4>
       <!-- <div align="center">
                 <el-input v-model="searchQuery.item" placeholder="请输入灾情码..." class="handle-input "></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
@@ -154,7 +155,7 @@
       </div>
     </div>
     <div>
-      <el-button type="text" @click="showMap()">灾情地图</el-button>
+      <!-- <el-button type="text" @click="showMap()">灾情地图</el-button> -->
       <div v-show="isShow">
         <v-map ref="RefChilde" />
       </div>
