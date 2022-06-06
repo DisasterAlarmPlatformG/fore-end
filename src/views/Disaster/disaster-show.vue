@@ -179,20 +179,20 @@ export default {
         // }
         const router = useRouter();
         const cellClick = (row) => {
-            // console.log(row);
+            console.log("1");
             
-            router.push({
-                name: "dashboarddetail",
-                query: {
-                    //改变传递的参数
-                    id: row.disasterId,
-                    address_for_search: row.locationProvince + row.locationCity + row.locationCounty + row.locationTown,
-                    date_for_view: dateTransform('YYYY-mm-dd HH:MM', row.createTime),
-                    category: row.disasterMain,
-                    description: row.description,
+            // router.push({
+            //     name: "dashboarddetail",
+            //     query: {
+            //         //改变传递的参数
+            //         id: row.disasterId,
+            //         address_for_search: row.locationProvince + row.locationCity + row.locationCounty + row.locationTown,
+            //         date_for_view: dateTransform('YYYY-mm-dd HH:MM', row.createTime),
+            //         category: row.disasterMain,
+            //         description: row.description,
 
-                }
-            })
+            //     }
+            // })
         }
 
 
